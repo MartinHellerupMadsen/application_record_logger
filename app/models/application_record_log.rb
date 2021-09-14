@@ -37,12 +37,16 @@ class ApplicationRecordLog < ApplicationRecord
       else
         data = record.logging_data
       end
-      create(
+      create_parms = {           
         owner: record,
         data: data,
-        user_id: user_id,
         action: action,
-      )
+      }
+      create_parms[:user_id] = user_id if user_id
+
+      if ((data && data.length > 0) || action == :db_create)
+        create create_parms
+      end
     end
   end
 
