@@ -30,7 +30,7 @@ module ApplicationRecordLogger
 
   module ClassMethods
     def default_logging_fields
-      @@default_logging_fields ||= columns_hash.map do |key,rec|
+      @default_logging_fields ||= columns_hash.map do |key,rec|
         [key, rec.type]
       end.select do |key,type|
         ApplicationRecordLogger.config[:log_field_types].include?(type)
